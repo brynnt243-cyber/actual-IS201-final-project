@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis Basics</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ======= HEADER + NAV ======= -->
+<header>
+    <h1 id="top">Tennis: A Beginner’s Guide</h1>
+    <nav>
+        <a href="index.html#resume" class="nav-link">Back to Resume</a>
+        <a href="#howtoplay" class="nav-link">How to Play</a>
+        <a href="#players" class="nav-link">Top Players</a>
+        <a href="#stats" class="nav-link">Statistics</a>
+        <a href="tennis-wordle.html" class="nav-link">Tennis Wordle 🎾</a>
+
+    </nav>
+</header>
+
+<!-- ======= INTRO SECTION ======= -->
+<div class="section intro">
+    <p>Tennis is one of the most-loved sports worldwide, combining agility, strategy, and endurance. Whether you’ve never picked up a racket or just want to learn the rules, this guide will help you get started.</p>
+
+    <!-- Tennis court image -->
+    <img src="images/tennis-court.jpeg" alt="Tennis Court" class="intro-img">
+
+    <p><a class="anchor" href="#top">Back to top</a></p>
+</div>
+
+<!-- ======= HOW TO PLAY SECTION ======= -->
+<div class="section" id="howtoplay">
+    <h2>How to Play Tennis</h2>
+
+    <ol>
+        <li>Understand how points work:
+            <ul>
+                <li>0 points = “Love”</li>
+                <li>15, 30, 40, Game</li>
+                <li>Win by at least two points</li>
+            </ul>
+        </li>
+        <li>Know the basic shots:
+            <ul>
+                <li>Serve</li>
+                <li>Forehand</li>
+                <li>Backhand</li>
+                <li>Volley</li>
+            </ul>
+        </li>
+        <li>Be aware of the court layout:
+            <ul>
+                <li>Singles vs Doubles lines</li>
+                <li>Service boxes</li>
+                <li>Baseline</li>
+            </ul>
+        </li>
+    </ol>
+
+    <!-- Embedded YouTube Video -->
+    <iframe class="video" width="560" height="315" 
+        src="https://www.youtube.com/embed/RsFaBNYpDDA" 
+        title="Tennis Basics" 
+        frameborder="0" 
+        allowfullscreen>
+    </iframe>
+
+    <p><a class="anchor" href="#top">Back to top</a></p>
+</div>
+
+<!-- ======= TOP PLAYERS SECTION ======= -->
+<div class="section" id="players">
+    <h2>Great Players</h2>
+
+    <div class="player-card">
+        <h3>Roger Federer</h3>
+        <img src="images/federer.jpeg" alt="Roger Federer" class="player-card-img">
+        <p>Known for elegance and precision, Federer holds multiple Grand Slam titles and is widely considered one of the greatest tennis players of all time.</p>
+    </div>
+
+    <div class="player-card">
+        <h3>Coco Gauff</h3>
+        <img src="images/gauff.jpeg" alt="Coco Gauff" class="player-card-img">
+        <p>Gauff is one of the rising stars of women’s tennis, admired not only for her fierce play but for her maturity and activism off the court.</p>
+    </div>
+
+    <p><a class="anchor" href="#top">Back to top</a></p>
+</div>
+
+<!-- ======= STATS SECTION (TABLEAU) ======= -->
+<div class="section" id="stats">
+    <h2>Grand Slam Statistics</h2>
+    <p>This chart highlights the top Grand Slam winners across history. Although it actually shows random Michael Jordan stats!</p>
+
+    <!-- Embedded Tableau Graph -->
+    <div class='tableauPlaceholder' id='viz1765319957433' style='position: relative; width: 100%; height: 600px;'>
+        <noscript>
+            <a href='#'>
+                <img alt='PlayerViz' src='https://public.tableau.com/static/images/Jo/JordanCareerScoring/PlayerViz/1_rss.png' style='border: none' />
+            </a>
+        </noscript>
+        <object class='tableauViz' style='display:none; width:100%; height:100%;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+            <param name='embed_code_version' value='3' /> 
+            <param name='site_root' value='' />
+            <param name='name' value='JordanCareerScoring/PlayerViz' />
+            <param name='tabs' value='no' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/Jo/JordanCareerScoring/PlayerViz/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='en-US' />
+        </object>
+    </div>
+
+    <p><a class="anchor" href="#top">Back to top</a></p>
+</div>
+
+<!-- Tableau JS (must include once at the end of body) -->
+<script type='text/javascript'>
+    var divElement = document.getElementById('viz1765319957433');                    
+    var vizElement = divElement.getElementsByTagName('object')[0];                    
+    vizElement.style.width='100%'; 
+    vizElement.style.height='600px';                    
+    var scriptElement = document.createElement('script');                    
+    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Professional Portfolio — Your Name</title>
+
+  <!-- Styling: navy-blue & white theme, boxed layout, accessible contrast -->
+  <style>
+    :root{
+      --navy: #0f3d6b;      /* soft, professional navy */
+      --navy-2: #133b6b;
+      --muted: #f6f8fb;     /* very light background */
+      --accent: #1b78d1;    /* subtle accent for links/buttons */
+      --box-shadow: 0 6px 18px rgba(11, 61, 107, 0.08);
+      --radius: 10px;
+      --max-width: 1100px;
+      --gap: 20px;
+      --text: #0b2540;
+    }
+
+    /* Reset-ish */
+    *,*::before,*::after{box-sizing:border-box}
+    html, body { min-height: 100%; }
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, var(--muted), #ffffff 60%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px 20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    /* Page container */
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+      background:white;
+      border-radius:var(--radius);
+      box-shadow:var(--box-shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:var(--gap);
+    }
+
+    /* Header across top of grid (span both columns) */
+    header{
+      grid-column: 1 / -1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:28px 32px;
+      background: linear-gradient(90deg, rgba(15,61,107,0.98), rgba(19,59,107,0.9));
+      color:white;
+    }
+    header .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:20px;
+      letter-spacing:0.6px;
+    }
+    header h1{
+      margin:0;
+      font-size:18px;
+      font-weight:600;
+    }
+    header p{margin:0; opacity:0.95; font-size:13px}
+
+    /* Sidebar (left) */
+    aside{
+      padding:26px;
+      border-right:1px solid #edf2f6;
+      background:linear-gradient(180deg, rgba(15,61,107,0.03), transparent);
+    }
+    .photo{
+      width:100%;
+      border-radius:8px;
+      background:linear-gradient(135deg, var(--navy), var(--navy-2));
+      height:160px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:18px;
+      box-shadow:0 6px 14px rgba(11,61,107,0.06);
+    }
+    .contact-box{
+      background:white;
+      border:1px solid #e6eef8;
+      padding:14px;
+      border-radius:8px;
+      box-shadow:var(--box-shadow);
+    }
+    .contact-box h3{
+      margin:0 0 8px 0;
+      font-size:14px;
+      color:var(--navy);
+    }
+    .contact-box p{margin:6px 0; font-size:13px; color: #133b6b}
+
+    /* Main content */
+    main{
+      padding:28px 32px;
+    }
+    .section{
+      margin-bottom:20px;
+      display:block;
+    }
+    .card{
+      border-radius:10px;
+      border:1px solid #e9f1fb;
+      padding:18px;
+      background:white;
+      box-shadow:var(--box-shadow);
+    }
+    .card h2{
+      margin-top:0;
+      color:var(--navy);
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .muted{
+      color:#697e98;
+      font-size:13px;
+    }
+
+    /* Resume layout items */
+    .resume-row{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      margin-top:12px;
+    }
+    .resume-left{
+      width:145px;
+      color:#2c5170;
+      font-weight:600;
+      font-size:13px;
+    }
+    .resume-right{
+      flex:1;
+    }
+    .job{
+      margin-bottom:12px;
+    }
+    .job h4{
+      margin:0;
+      font-size:14px;
+      color:#133b6b;
+    }
+    .job .meta{
+      font-size:13px;
+      color:#6b829a;
+      margin-bottom:6px;
+    }
+    .skill-pill{
+      display:inline-block;
+      background:#f0f7ff;
+      color:var(--navy);
+      border:1px solid #d7eaff;
+      padding:6px 10px;
+      border-radius:999px;
+      margin:6px 6px 0 0;
+      font-size:13px;
+    }
+
+    /* Buttons / links */
+    .btn{
+      display:inline-block;
+      background:var(--accent);
+      color:white;
+      padding:10px 14px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      box-shadow:0 6px 18px rgba(27,120,209,0.18);
+    }
+
+    /* Small helpers */
+    .two-cols{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    ul.clean{
+      margin:0;
+      padding-left:18px;
+    }
+
+    /* Ordered list with embedded unordered list (demo of requirement) */
+    ol.demo{
+      background:#fbfdff;
+      border:1px dashed #e5f0ff;
+      padding:12px 16px;
+      border-radius:8px;
+      font-size:14px;
+      color:#163a57;
+    }
+    ol.demo li{margin:8px 0}
+    ol.demo li ul{
+      margin-top:6px;
+      padding-left:20px;
+      list-style-type: disc;
+    }
+
+    /* Footer */
+    footer{
+      grid-column: 1 / -1;
+      padding:12px 28px;
+      font-size:13px;
+      color:#6b829a;
+      border-top:1px solid #eef5fb;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:linear-gradient(180deg, rgba(15,61,107,0.02), transparent);
+    }
+
+    /* Responsive */
+    @media (max-width:880px){
+      .wrap{grid-template-columns:1fr; padding:0}
+      aside{border-right:none; border-bottom:1px solid #eef5fb}
+      header{flex-direction:column; gap:12px; align-items:flex-start}
+    }
+    @media (max-width:520px){
+      .two-cols{grid-template-columns:1fr}
+      .photo{height:120px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">BT</div>
+        <div>
+          <h1>Brynn Taylor</h1>
+          <p class="muted">Brigham Young University Student • Provo, Utah</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <a class="btn" href="#resume">Résumé</a>
+        <a class="btn" href="Website.html">Tennis Scratch Page</a>
+        <a class="btn" href="tennis-wordle.html">Tennis Wordle</a>
+        <!-- If you add real social links, make sure they are not broken before submission -->
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside>
+      <div class="photo" aria-hidden="true">
+        <!-- Replace initials or add an <img src="yourphoto.jpg" alt="Your name"> -->
+        BT
+      </div>
+
+      <div class="contact-box" aria-labelledby="contact-heading">
+        <h3 id="contact-heading">Contact</h3>
+        <!-- REPLACE: Add your contact details or remove if you don't want them public -->
+        <p><strong>Email:</strong> toopersonal@gmail.com</p>
+        <p><strong>Phone:</strong> (123) 456-7890</p>
+        <p><strong>Website:</strong> brynnssite.example</p>
+      </div>
+
+      <div style="height:18px"></div>
+
+      <div class="contact-box" aria-labelledby="skills-heading" style="margin-top:12px">
+        <h3 id="skills-heading">Key Skills</h3>
+        <!-- Add or replace skill pills -->
+        <div>
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+          <span class="skill-pill">Excelt</span>
+          <span class="skill-pill">Tableau</span>
+          <span class="skill-pill">VBA</span>
+          <span class="skill-pill">SQL</span>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="contact-box" aria-labelledby="education-heading" style="margin-top:12px">
+        <h3 id="education-heading">Education</h3>
+        <p style="margin:6px 0 0 0"><strong>Institution Name</strong></p>
+        <p class="muted" style="margin:4px 0 0 0">Still attending • Accounting • 2029</p>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main>
+      <!-- Professional summary -->
+      <section class="section card" id="summary">
+        <h2>Professional Summary</h2>
+        <p class="muted">My goal is to graduate from BYU’s accounting program with either my bachelors or masters. I plan to get a job that allows me to be creative, curious, and impactful. I love to work with others and especially, problem solve!</p>
+      </section>
+
+      <!-- Résumé (in HTML) -->
+      <section class="section card" id="resume" aria-labelledby="resume-heading">
+        <h2 id="resume-heading">Résumé</h2>
+
+        <!-- EXPERIENCE -->
+        <div class="resume-row">
+          <div class="resume-left">Experience</div>
+          <div class="resume-right">
+            <!-- Repeat this job block for multiple positions -->
+            <div class="job">
+              <h4>Administrative Assistant: — Budget Rent a Car</h4>
+              <div class="meta">Wichita, Kansas &nbsp;•&nbsp; May 2024 – August 2024</div>
+              <ul class="clean">
+                <li>I assisted managers with daily operations, including filing documents, answering phones, and providing customer support. Occasionally I would register new vehicles and process necessary paperwork with accuracy and attention to detail. I also supported the team by washing vehicles and transporting fleet cars to various locations as needed.</li>
+              </ul>
+            </div>
+
+            <div class="job">
+              <h4>Previous General employee — Kaw Valley Greenhouse</h4>
+              <div class="meta">Wichita, Kansas &nbsp;•&nbsp; May 2023 – August 2023</div>
+              <ul class="clean">
+                <li>I maintained plant inventory by watering, pruning, trimming, and organizing merchandise. I also restocked products and ensured displays were neat and visually appealing. Lastly, I provided customer support by answering questions and assisting with product selection.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px dashed #eef5fb;margin:18px 0">
+
+        <!-- SKILLS -->
+        <div class="resume-row">
+          <div class="resume-left">Skills</div>
+          <div class="resume-right">
+            <div style="margin-bottom:6px">Technical: <strong>HTML, CSS, JavaScript, Git</strong></div>
+            <div>Other: <strong>Communication, Team Member</strong></div>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px dashed #eef5fb;margin:18px 0">
+
+        <!-- AWARDS / HONORS -->
+        <div class="resume-row">
+          <div class="resume-left">Awards</div>
+          <div class="resume-right">
+            <p style="margin:0"><strong>Naitonal Honors Society</strong> — Graduated with this in May 2024</p>
+          </div>
+        </div>
+      
+    </main>
+
+    <!-- Footer (span both columns) -->
+    <footer>
+      <div>© <strong>Brynn Taylor</strong> — Professional Resume</div>
+      <div class="muted">Prepared for IS 201 • Clean, navy & white theme</div>
+    </footer>
+  </div>
+</body>
+</html>

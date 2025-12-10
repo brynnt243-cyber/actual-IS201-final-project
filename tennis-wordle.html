@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tennis Wordle Clone</title>
+
+<!-- Google Font for playful style -->
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+<style>
+/* === GENERAL STYLING === */
+body {
+    font-family: 'Luckiest Guy', cursive;
+    background-color: #f3f8f2; /* soft tennis green background */
+    margin: 0;
+    padding: 0;
+    color: #1b3d2f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #8EBF87; /* soft tennis green */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* === GAME BOARD === */
+#board {
+    display: grid;
+    grid-template-rows: repeat(6, 60px);
+    grid-gap: 10px;
+    margin-top: 20px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    gap: 5px;
+}
+
+.tile {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #8EBF87;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* === KEYBOARD === */
+#keyboard {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    gap: 5px;
+    justify-content: center;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    background-color: #e8f3e5;
+    border: 2px solid #8EBF87;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.key.correct {
+    background-color: #a2d5a1; /* green */
+    color: white;
+}
+
+.key.present {
+    background-color: #f7d16c; /* yellow */
+    color: white;
+}
+
+.key.absent {
+    background-color: #ccc;
+    color: white;
+}
+
+/* === CONFETTI CANVAS === */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+/* === MESSAGE === */
+#message {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #1b3d2f;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Tennis Wordle</h1>
+    <div>
+        <a href="index.html#resume">Back to Resume</a> | 
+        <a href="Website.html">Back to Tennis Page</a>
+    </div>
+</header>
+
+<div id="board"></div>
+<div id="message"></div>
+<div id="keyboard"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+// === GAME DATA ===
+const WORDS = [
+    "serve",
+    "rally",
+    "smash",
+    "court",
+    "coach",   // you could pad a 3-letter word with a variant or replace
+    "fault",
+    "match",
+    "volley"
+];
+let solution = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+let currentRow = 0;
+let currentTile = 0;
+let gameOver = false;
+
+// === CREATE BOARD ===
+const board = document.getElementById("board");
+for(let i=0; i<6; i++){
+    const row = document.createElement("div");
+    row.classList.add("row");
+    for(let j=0; j<5; j++){
+        const tile = document.createElement("div");
+        tile.classList.add("tile");
+        row.appendChild(tile);
+    }
+    board.appendChild(row);
+}
+
+// === CREATE KEYBOARD ===
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const keyboard = document.getElementById("keyboard");
+letters.split("").forEach(l => {
+    const key = document.createElement("div");
+    key.classList.add("key");
+    key.textContent = l;
+    key.addEventListener("click", ()=>handleKey(l));
+    keyboard.appendChild(key);
+});
+
+// === HANDLE KEY PRESS ===
+document.addEventListener("keydown", (e)=>{
+    if(gameOver) return;
+    const key = e.key.toUpperCase();
+    if(key === "ENTER") checkGuess();
+    else if(key === "BACKSPACE") deleteLetter();
+    else if(letters.includes(key)) addLetter(key);
+});
+
+function addLetter(letter){
+    if(currentTile < 5){
+        const row = board.children[currentRow];
+        row.children[currentTile].textContent = letter;
+        currentTile++;
+    }
+}
+
+function deleteLetter(){
+    if(currentTile>0){
+        currentTile--;
+        const row = board.children[currentRow];
+        row.children[currentTile].textContent = "";
+    }
+}
+
+function checkGuess(){
+    const row = board.children[currentRow];
+    let guess = "";
+    for(let i=0;i<5;i++){
+        guess += row.children[i].textContent;
+    }
+    if(guess.length<5) return;
+
+    // Check each letter
+    for(let i=0;i<5;i++){
+        const tile = row.children[i];
+        const key = [...keyboard.children].find(k => k.textContent === tile.textContent);
+        if(tile.textContent === solution[i]){
+            tile.style.backgroundColor = "#a2d5a1"; // green
+            if(key) key.classList.add("correct");
+        } else if(solution.includes(tile.textContent)){
+            tile.style.backgroundColor = "#f7d16c"; // yellow
+            if(key) key.classList.add("present");
+        } else {
+            tile.style.backgroundColor = "#ccc"; // grey
+            if(key) key.classList.add("absent");
+        }
+    }
+
+    if(guess === solution){
+        showMessage("🎾 You win!");
+        confetti();
+        gameOver = true;
+        return;
+    }
+
+    currentRow++;
+    currentTile = 0;
+    if(currentRow===6){
+        showMessage(`💔 Game Over! Word was ${solution}`);
+        gameOver = true;
+    }
+}
+
+function showMessage(msg){
+    const messageDiv = document.getElementById("message");
+    messageDiv.textContent = msg;
+}
+
+// === HANDLE CLICKED KEYBOARD ===
+function handleKey(letter){
+    if(letter === "ENTER") checkGuess();
+    else if(letter === "BACKSPACE") deleteLetter();
+    else addLetter(letter);
+}
+
+// === CONFETTI EFFECT ===
+function confetti(){
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettis = [];
+    for(let i=0;i<150;i++){
+        confettis.push({
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height,
+            r: Math.random()*6+4,
+            dx: (Math.random()-0.5)*2,
+            dy: Math.random()*3+2,
+            color: `hsl(${Math.random()*360}, 70%, 60%)`
+        });
+    }
+
+    function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        confettis.forEach(c=>{
+            ctx.beginPath();
+            ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+            ctx.fillStyle = c.color;
+            ctx.fill();
+            c.x += c.dx;
+            c.y += c.dy;
+            if(c.y>canvas.height){
+                c.y = -10;
+                c.x = Math.random()*canvas.width;
+            }
+        });
+        if(!gameOver) requestAnimationFrame(draw);
+    }
+    draw();
+}
+</script>
+
+</body>
+</html>

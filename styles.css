@@ -1,0 +1,76 @@
+/* === GENERAL === */
+body {
+    font-family: "Merriweather", serif;
+    background-color: #f3f8f2; 
+    margin: 0;
+    padding: 0;
+    color: #1b3d2f;
+}
+
+/* === HEADER === */
+header {
+    background-color: #8EBF87; /* soft tennis green */
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* === SECTIONS === */
+.section {
+    padding: 40px;
+    max-width: 900px;
+    margin: auto;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* === INTRO IMAGE === */
+.intro-img {
+    max-width: 900px;    /* Prevent stretching beyond original resolution */
+    width: 100%;
+    height: auto;        /* Maintain aspect ratio */
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* === PLAYER CARDS === */
+.player-card {
+    background-color: #e8f3e5;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.player-card-img {
+    max-width: 400px;    /* Prevent stretching too large */
+    width: 100%;         /* Scale down if screen is smaller */
+    height: auto;        /* Maintain aspect ratio */
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* === ANCHORS === */
+.anchor {
+    font-size: 0.9rem;
+    color: #8EBF87;
+}
+
+/* === VIDEO === */
+.video {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+}
